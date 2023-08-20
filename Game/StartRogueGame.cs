@@ -3,6 +3,7 @@ using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation.Input;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using System.Collections.Generic;
 
 namespace BTD6Rogue;
@@ -13,7 +14,14 @@ public partial class BTD6Rogue : BloonsTD6Mod {
         if (game.GetGameModel().gameMode != "BTD6Rogue-Roguemode") { return; } // Check if user is in the right gamemode
         currentGame = new RogueGame();
 
+        if (gameSettingsUi.selectedDifficulty == null)
+        {
+            PopupScreen.instance.ShowOkPopup("Remove your game save and retry, do this by creating a new game and leaving at round one.");
+            return;
+        }
+
         currentGame.difficulty = gameSettingsUi.selectedDifficulty;
+        PopupScreen.instance.ShowOkPopup("");
         currentGame.availableTowerSets = availableTowerSets;
         currentGame.availableBosses = availableBosses;
         currentGame.bossBag = availableBosses;
